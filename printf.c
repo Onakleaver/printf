@@ -6,14 +6,14 @@ int _printf(const char *format, ...)
     int num_char = 0;
 
     va_list arg_list;
-    
+
     if(!format)
     {
         return (-1);
     }
-    
+
     var_start(arg_list, format);
-    
+
     {
         while(*format != '\0')
         {
@@ -44,7 +44,13 @@ int _printf(const char *format, ...)
                 else
                 {
                     char *str = va_arg(arg_list, char*);
-                    int len = 0;
+                    int len;
+		    for (len = 0; str[len] != '\0'; len++)
+		    {
+			    _putchar(str);
+			    num_char++;
+
+		    }
                 }
         //check for %(exists)
         //check if the next character is c, s, or %
@@ -54,11 +60,12 @@ int _printf(const char *format, ...)
         // writes output to the stdio
         //return number of characters printed
             }
-            return (num_char);
+            formart++;
         }
 
     }
 
 
     va_end(arg_list);
+    return (num_char);
 }
