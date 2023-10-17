@@ -1,10 +1,10 @@
 #include "main.h"
 
 int _printf(const char *format, ...) {
+	char token[1000];
     va_list args;
     va_start(args, format);
   
-    char token[1000];
     int k = 0;
 	int i;
   
