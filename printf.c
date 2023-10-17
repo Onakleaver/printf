@@ -1,55 +1,59 @@
 #include "main.h"
 
-int _printf(const char *format, ...) {
-    int k = 0;
-	int i;
-	char token[1000];
-    va_list args;
-    va_start(args, format);
-  
-    for (i = 0; format[i] != '\0'; i++) {
-        token[k++] = format[i];
-  
-        if (format[i + 1] == '%' || format[i + 1] == '\0') {
-            token[k] = '\0';
-            k = 0;
-            if (token[0] != '%') {
-                fprintf(stdout, "%s", token);
-            } else {
-                int j = 1;
-                char ch1 = 0;
-  
-                while ((ch1 = token[j++]) < 58) {
-                }
-                if (ch1 == 'i' || ch1 == 'd' || ch1 == 'u' || ch1 == 'h') {
-                    fprintf(stdout, token, va_arg(args, int));
-                } else if (ch1 == 'c') {
-                    fprintf(stdout, token, va_arg(args, int));
-                } else if (ch1 == 'f') {
-                    fprintf(stdout, token, va_arg(args, double));
-                } else if (ch1 == 'l') {
-                    char ch2 = token[2];
-                    if (ch2 == 'u' || ch2 == 'd' || ch2 == 'i') {
-                        fprintf(stdout, token, va_arg(args, long));
-                    } else if (ch2 == 'f') {
-                        fprintf(stdout, token, va_arg(args, double));
-                    }
-                } else if (ch1 == 'L') {
-                    char ch2 = token[2];
-                    if (ch2 == 'u' || ch2 == 'd' || ch2 == 'i') {
-                        fprintf(stdout, token, va_arg(args, long));
-                    } else if (ch2 == 'f') {
-                        fprintf(stdout, token, va_arg(args, double));
-                    }
-                } else if (ch1 == 's') {
-                    fprintf(stdout, token, va_arg(args, char*));
-                } else {
-                    fprintf(stdout, "%s", token);
-                }
-            }
-        }
-    }
-  
-    va_end(args);
-    return 0;
+int _printf(const char *format, ...)
+{
+	int num_char = 0;
+	va_list arg_list;
+
+	if (!format)
+	{
+		return (-1);
+	}
+	va_start(arg_list, format);
+
+	while (*format)
+	{
+		if (*format != '%')
+		{
+			write(1, format, 1);
+			num_char++;
+			format++;
+		}
+		else
+		{
+			format++;
+			if (*format == 'c')
+			{
+				char c = va_arg(arg_list, int);
+
+				write(1, &c, 1);
+				num_char++;
+			}
+			else if (*format == '\0')
+			{
+				break;
+			}
+			else if (*format == '%')
+			{
+				char c = va_arg(arg_list, int);
+
+				write(1, &c, 1);
+				num_char++;
+			}
+			else
+			{
+				char *str = va_arg(arg_list, char *);
+				int len;
+
+				for (len = 0; str[len] != '\0'; len++)
+				{
+					write(1, &str, str[len]);
+					num_char++;
+				}
+			}
+		}
+		format++;
+	}
+	va_end(arg_list);
+	return (num_char);
 }
