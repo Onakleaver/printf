@@ -5,6 +5,11 @@ int _printf(const char *format, ...)
     va_list args;
     int printed_chars = 0;
 
+	if(!format)
+	{
+		return (-1);
+	}
+
     va_start(args, format);
 
     while (*format)
