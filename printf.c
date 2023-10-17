@@ -2,58 +2,78 @@
 
 int _printf(const char *format, ...)
 {
-	int num_char = 0;
-	va_list arg_list;
+    va_list args;
+    int printed_chars = 0;
 
-	if (!format)
-	{
-		return (-1);
-	}
-	va_start(arg_list, format);
+    va_start(args, format);
 
-	while (*format)
-	{
-		if (*format != '%')
-		{
-			write(1, format, 1);
-			num_char++;
-			format++;
-		}
-		else
-		{
-			format++;
-			if (*format == 'c')
-			{
-				char c = va_arg(arg_list, int);
+    while (*format)
+    {
+        if (*format != '%')
+        {
+            write(1, format, 1);
+            printed_chars++;
+        }
+        else
+        {
+            format++;
+            switch (*format)
+            {
+                case 'c':
+                {
+                    char c = va_arg(args, int);
+                    write(1, &c, 1);
+                    printed_chars++;
+                    break;
+                }
+                case 's':
+                {
+                    char *str = va_arg(args, char *);
+                    while (*str)
+                    {
+                        write(1, str, 1);
+                        str++;
+                        printed_chars++;
+                    }
+                    break;
+                }
+                case 'd':
+                case 'i':
+                {
+                    int num = va_arg(args, int);
+                    char buffer[20]; // Assuming a reasonable buffer size
+                    int len = snprintf(buffer, sizeof(buffer), "%d", num);
+                    write(1, buffer, len);
+                    printed_chars += len;
+                    break;
+                }
+                case 'u':
+                {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char buffer[20]; // Assuming a reasonable buffer size
+                    int len = snprintf(buffer, sizeof(buffer), "%u", num);
+                    write(1, buffer, len);
+                    printed_chars += len;
+                    break;
+                }
+                case 'p':
+                {
+                    void *ptr = va_arg(args, void *);
+                    char buffer[20]; // Assuming a reasonable buffer size
+                    int len = snprintf(buffer, sizeof(buffer), "%p", ptr);
+                    write(1, buffer, len);
+                    printed_chars += len;
+                    break;
+                }
+                default:
+                    write(1, "%", 1);
+                    printed_chars++;
+                    break;
+            }
+        }
+        format++;
+    }
 
-				write(1, &c, 1);
-				num_char++;
-			}
-			else if (*format == '\0')
-			{
-				break;
-			}
-			else if (*format == '%')
-			{
-				char c = va_arg(arg_list, int);
-
-				write(1, &c, 1);
-				num_char++;
-			}
-			else
-			{
-				char *str = va_arg(arg_list, char *);
-				int len;
-
-				for (len = 0; str[len] != '\0'; len++)
-				{
-					write(1, &str, str[len]);
-					num_char++;
-				}
-			}
-		}
-		format++;
-	}
-	va_end(arg_list);
-	return (num_char);
+    va_end(args);
+    return printed_chars;
 }
