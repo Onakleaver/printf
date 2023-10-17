@@ -1,5 +1,14 @@
 #include "main.h"
 
+/**
+ * _printf - Custom implementation of printf function.
+ * @format: A format string with optional format specifiers.
+ * @...: Variable number of arguments to replace format specifiers.
+ *
+ * Return: The number of characters printed (excluding the null byte).
+ *         Returns -1 if format is NULL.
+ */
+
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -72,12 +81,6 @@ int _printf(const char *format, ...)
 				write(1, buffer, len);
 				printed_chars += len;
 				break;
-			}
-			case 'b':
-			{
-				unsigned int num = va_arg(args, unsigned int);
-				print_binary(num);
-				printed_chars += 32;
 			}
 			default:
 				write(1, "%", 1);
