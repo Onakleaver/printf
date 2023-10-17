@@ -6,8 +6,9 @@ int _printf(const char *format, ...) {
   
     char token[1000];
     int k = 0;
+	int i;
   
-    for (int i = 0; format[i] != '\0'; i++) {
+    for (i = 0; format[i] != '\0'; i++) {
         token[k++] = format[i];
   
         if (format[i + 1] == '%' || format[i + 1] == '\0') {
