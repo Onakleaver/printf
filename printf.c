@@ -38,9 +38,9 @@ int _printf(const char *format, ...) {
                 } else if (ch1 == 'L') {
                     char ch2 = token[2];
                     if (ch2 == 'u' || ch2 == 'd' || ch2 == 'i') {
-                        fprintf(stdout, token, va_arg(args, long long));
+                        fprintf(stdout, token, va_arg(args, long));
                     } else if (ch2 == 'f') {
-                        fprintf(stdout, token, va_arg(args, long double));
+                        fprintf(stdout, token, va_arg(args, double));
                     }
                 } else if (ch1 == 's') {
                     fprintf(stdout, token, va_arg(args, char*));
@@ -54,4 +54,3 @@ int _printf(const char *format, ...) {
     va_end(args);
     return 0;
 }
-
