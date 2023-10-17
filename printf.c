@@ -41,7 +41,7 @@ int _printf(const char *format, ...)
                 case 'i':
                 {
                     int num = va_arg(args, int);
-                    char buffer[20]; // Assuming a reasonable buffer size
+                    char buffer[20];
                     int len = snprintf(buffer, sizeof(buffer), "%d", num);
                     write(1, buffer, len);
                     printed_chars += len;
@@ -50,7 +50,7 @@ int _printf(const char *format, ...)
                 case 'u':
                 {
                     unsigned int num = va_arg(args, unsigned int);
-                    char buffer[20]; // Assuming a reasonable buffer size
+                    char buffer[20];
                     int len = snprintf(buffer, sizeof(buffer), "%u", num);
                     write(1, buffer, len);
                     printed_chars += len;
@@ -59,7 +59,7 @@ int _printf(const char *format, ...)
                 case 'p':
                 {
                     void *ptr = va_arg(args, void *);
-                    char buffer[20]; // Assuming a reasonable buffer size
+                    char buffer[20];
                     int len = snprintf(buffer, sizeof(buffer), "%p", ptr);
                     write(1, buffer, len);
                     printed_chars += len;
