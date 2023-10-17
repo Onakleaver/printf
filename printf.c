@@ -27,6 +27,7 @@ int _printf(const char *format, ...)
                 case 'c':
                 {
                     char c = va_arg(args, int);
+
                     write(1, &c, 1);
                     printed_chars++;
                     break;
@@ -34,7 +35,7 @@ int _printf(const char *format, ...)
                 case 's':
                 {
                     char *str = va_arg(args, char *);
-                    while (*str)
+                    while (*str != '\0')
                     {
                         write(1, str, 1);
                         str++;
@@ -48,6 +49,7 @@ int _printf(const char *format, ...)
                     int num = va_arg(args, int);
                     char buffer[20];
                     int len = snprintf(buffer, sizeof(buffer), "%d", num);
+
                     write(1, buffer, len);
                     printed_chars += len;
                     break;
@@ -66,6 +68,7 @@ int _printf(const char *format, ...)
                     void *ptr = va_arg(args, void *);
                     char buffer[20];
                     int len = snprintf(buffer, sizeof(buffer), "%p", ptr);
+
                     write(1, buffer, len);
                     printed_chars += len;
                     break;
