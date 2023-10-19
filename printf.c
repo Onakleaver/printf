@@ -87,11 +87,14 @@ int _printf(const char *format, ...)
 				printed_chars += len;
 				break;
 			}
-			default:
+			case '%':
+			{
 				write(1, "%", 1);
 				printed_chars++;
 				break;
 			}
+			default:
+				break;
 		}
 		format++;
 	}
