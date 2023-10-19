@@ -9,6 +9,12 @@
  *         Returns -1 if format is NULL.
  */
 
+int handle_specifier(char specifier, va_list args);
+int _strlen(const char *str);
+int _itoa(int num, char *buffer);
+int _utoa(unsigned int num, char *buffer);
+int _ptoa(void *ptr, char *buffer);
+
 int _printf(const char *format, ...)
 {
 	va_list args;
