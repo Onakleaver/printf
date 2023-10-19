@@ -95,6 +95,7 @@ int _printf(const char *format, ...)
 			}
 			default:
 				break;
+			}
 		}
 		format++;
 	}
