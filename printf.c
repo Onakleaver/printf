@@ -56,7 +56,7 @@ int _printf(const char *format, ...)
 				}
 				break;
 			}
-			case 'd':
+			case 'd': 
 			case 'i':
 			{
 				int num = va_arg(args, int);
@@ -93,32 +93,6 @@ int _printf(const char *format, ...)
 				printed_chars++;
 				break;
 			}
-			case 'b':
-			{
-				unsigned int num = va_arg(args, unsigned int);
-				char buffer[33]; // Maximum 32 bits for binary representation + '\0'
-				int len = 0;
-
-				if (num == 0)
-				{
-					buffer[0] = '0';
-					buffer[1] = '\0';
-					len = 1;
-				}
-				else
-				{
-					for (int i = 31; i >= 0; i--)
-					{
-						buffer[len++] = (num & (1 << i)) ? '1' : '0';
-					}
-					buffer[len] = '\0';
-				}
-
-				write(1, buffer, len);
-				printed_chars += len;
-				break;
-			}
-
 			default:
 				break;
 			}
